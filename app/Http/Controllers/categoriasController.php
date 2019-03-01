@@ -9,8 +9,11 @@ class categoriasController extends Controller
 {
     //
     public function show(Category $category)
-    {   $categoria = $category;
-        $posts = $category->posts()->paginate(5);
-        return view('welcome',compact('posts','categoria'));
+    {   
+        return view('welcome',[
+            'title' => "Publicaciones de la categoria  $category->name ",
+            'posts'=>$category->posts()->paginate(5),
+
+        ]);
     }
 }

@@ -90,7 +90,7 @@
                     <div class="form-group {{$errors->has('category')? 'has-error':''}}">
                         <label>Selecciona una categoria</label>
 
-                        <select name="category" class="form-control" >
+                        <select name="category" class="form-control select2" >
                             <option value="">Selecciona una categoria</option>
                             @foreach ($categories  as $category)
                                 <option value="{{$category->id}}" {{old('category',$post->category_id) == $category->id ? 'selected': ''}}
@@ -164,7 +164,9 @@
             CKEDITOR.config.height=315;
 
             //Initialize Select2 Elements
-            $('.select2').select2()
+            $('.select2').select2({
+                'tags':true
+            });
 
            var myDropzone = new Dropzone('.dropzone',{
                 url:'/admin/posts/{{$post->url}}/photos',

@@ -76,11 +76,19 @@ class PostController extends Controller
         $post->body = $request->get('body');
         $post->excerpt = $request->get('excerpt');
         $post->published_at = is_null($request->published_at) ? null : Carbon::parse($request->get('published_at'));
-        $post->category_id = $request->get('category');
+        // $post->category_id = $request->get('category');
+        $post->category_id = Category::find($cat = $request->get('category'))
+                             ? $cat : Category::create(['name' => $cat])->id;
 
+        
+        $tags=[];
+            foreach ($request->get('tags') as $tag) {
+                # code...
+                $tags[] = Tag::find($tag) ? $tag : Tag::create(['name' => $tag ])->id;
+            }
         $post->save();
 
-        $post->tags()->sync($request->get('tags'));
+        $post->tags()->sync($tags);
 
         return redirect()->route('admin.posts.edit',compact('post'))->with('flash','Tu publicacion ha sido guardada');
 
