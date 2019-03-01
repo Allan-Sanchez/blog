@@ -8,7 +8,8 @@ use Carbon\Carbon;
 class Post extends Model
 {
     //
-    protected $fillable = ['title','url'];
+    protected $fillable = ['title','iframe','body','excerpt','published_at', 'category_id'];
+    // protected $guarded = [];
 
     protected $dates = ['published_at'];//para usar lo metodos de carbon
 
@@ -44,5 +45,33 @@ class Post extends Model
         ->latest('published_at');
     }
 
+    public function setTitleAttribute($title)
+    {
+        # code...
+        $this->attributes["title"] = $title;
+        $this->attributes["url"] = str_slug($title);
+    }
+
+    public function setPublishedAtAttribute($published_at)
+    {
+        $this->attributes['published_at'] = $published_at ? Carbon::parse($published_at): null;
+    }
+
+    public function setCategoryIdAttribute($category_id)
+    {
+        $this->attributes['category_id']= Category::find($category_id)
+        ? $category_id : Category::create(['name' => $category_id])->id;
+    }
+
+    public function syncTags($tags)
+    {
+        # code...
+        $tagIds = collect($tags)->map(function ($tag){
+                
+            return  Tag::find($tag) ? $tag : Tag::create(['name' => $tag ])->id; 
+        });
+
+        return $this->tags()->sync($tagIds);
+    }
 
 }
