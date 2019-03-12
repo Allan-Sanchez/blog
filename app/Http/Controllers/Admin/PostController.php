@@ -43,6 +43,7 @@ class PostController extends Controller
         ]);
 
         $post = Post::create(['title' => $request->get('title')]);
+        
 
         return redirect()->route('admin.posts.edit',compact('post'));
     }

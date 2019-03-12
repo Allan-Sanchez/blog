@@ -61,12 +61,55 @@ class Post extends Model
         ->latest('published_at');
     }
 
-    public function setTitleAttribute($title)
+    public static function create(array $attributes = [])
     {
         # code...
-        $this->attributes["title"] = $title;
-        $this->attributes["url"] = str_slug($title);
+        $post = static::query()->create($attributes);//de vuelve el post resien creado
+        
+        // primera forma
+        // $url = str_slug($attributes['title']);
+
+        //  if (static::where('url',$url)->exists()) {
+             
+        //      $url = " {$url}-{$post->id}";
+        //  }
+        // $post->url = $url;
+
+        // $post->save();
+        
+        // segunda forma
+        $post->generarUrl();
+
+        return $post;
     }
+    public function generarUrl()
+    {
+        $url = str_slug($this->title);
+
+        if ($this::whereUrl($url)->exists()) {
+             
+             $url = " {$url}-{$this->id}";
+         }
+        $this->url = $url;
+
+        $this->save();
+    }
+
+    // public function setTitleAttribute($title)
+    // {
+    //     # code...
+    //     $this->attributes["title"] = $title;
+        
+    //     $url = str_slug($title);
+    //     $duplicateUrlCount = Post::where('url','LIKE',"{$url}%")->count();
+
+    //     if ($duplicateUrlCount) {
+    //         # code...
+    //         $url .= "-" . ++$duplicateUrlCount;
+    //     }
+        
+    //     $this->attributes["url"] = $url;
+    // }
 
     public function setPublishedAtAttribute($published_at)
     {
