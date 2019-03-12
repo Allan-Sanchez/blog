@@ -1,9 +1,11 @@
 <?php
 
-use Illuminate\Database\Seeder;
+use Carbon\Carbon;
 use App\{Post,Category,Tag};
 
-use Carbon\Carbon;
+use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Storage;
+
 class PostsTableSeeder extends Seeder
 {
     /**
@@ -14,7 +16,7 @@ class PostsTableSeeder extends Seeder
     public function run()
     {
         //
-
+        Storage::deleteDirectory('public');
         Post::truncate();
         Category::truncate();//para limpiar la tabla
         Tag::truncate();//para limpiar la tabla
