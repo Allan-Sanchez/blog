@@ -44,7 +44,11 @@
                     <div class="">
                     <a class="btn btn-sm btn-default" href="{{route('posts.show',$post)}}" target="_blank" role="button"><i class="fa fa-eye" aria-hidden="true"></i></i></a>
                         <a class="btn btn-sm btn-info" href="{{route('admin.posts.edit',$post)}}" role="button"><i class="fa fa-pencil" aria-hidden="true"></i></a>
-                        <a class="btn btn-sm btn-danger" href="#" role="button"><i class="fa fa-times" aria-hidden="true"></i></a>
+                        <form action="{{route('admin.posts.destroy',$post)}}" method="POST" style="display:inline">
+                          @csrf  @method('DELETE')
+                          <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Estas seguro de querer eliminar esta publicacion.')">
+                            <i class="fa fa-times" aria-hidden="true"></i></button>
+                        </form>
                     </div>
                  </td>
              </tr>

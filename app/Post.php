@@ -13,6 +13,22 @@ class Post extends Model
 
     protected $dates = ['published_at'];//para usar lo metodos de carbon
 
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::deleting(function($post){
+            
+            $post->tags()->detach();//quita todas las etiquetas asignadas a este post
+
+            // $post->photos->each(function($photo){
+            //     $photo->delete();
+            // });
+
+            $post->photos->each->delete();
+        });
+    }
+
 
     /*
     **	@vamos a sobre escritbir el metodo para ya no traaer el id sino el titlo 

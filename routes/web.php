@@ -27,6 +27,7 @@ Route::group(['prefix' => 'admin', 'namespace'=> 'Admin', 'middleware'=> 'auth']
     Route::post('posts', 'PostController@store')->name('admin.posts.store');
     Route::get('posts/{post}', 'PostController@edit')->name('admin.posts.edit');
     Route::put('posts/{post}', 'PostController@update')->name('admin.posts.update');
+    Route::delete('posts/{post}', 'PostController@destroy')->name('admin.posts.destroy');
     // ruta para la carga de imganes
     Route::post('posts/{post}/photos', 'PhotosController@store')->name('admin.posts.photos.store');
     Route::delete('photos/{photo}','PhotosController@destroy')->name('admin.photos.destroy');

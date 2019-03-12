@@ -64,7 +64,8 @@ class PostController extends Controller
 
         $post->syncTags($request->get('tags'));
 
-        return redirect()->route('admin.posts.edit',compact('post'))->with('flash','Tu publicacion ha sido guardada');
+        return redirect()->route('admin.posts.edit',compact('post'))
+        ->with('flash','La publicacion ha sido guardada');
         
 
         // $tags=[];
@@ -80,5 +81,20 @@ class PostController extends Controller
         
     }
 
+    public function destroy(Post $post)
+    {
+        /*
+        **	@Revisar el model Post para ver todos la logica de eliminacion 
+        */
+        
+        
+
+        
+
+        $post->delete();
+
+        return redirect()->route('admin.posts.index')
+        ->with('flash','La publicacion ha sido elimida');
+    }
     
 }
