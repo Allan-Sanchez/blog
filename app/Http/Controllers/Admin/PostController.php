@@ -39,7 +39,7 @@ class PostController extends Controller
     {
         # code...
         $this->validate($request,[
-            'title'=> 'required',
+            'title'=> 'required | min:3',
         ]);
 
         $post = Post::create(['title' => $request->get('title')]);
