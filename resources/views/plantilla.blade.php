@@ -24,15 +24,9 @@
 	<header class="space-inter">
 		<div class="container container-flex space-between">
 			<figure class="logo"><img src="/img/logotipo.png" alt=""></figure>
-			<nav class="custom-wrapper" id="menu">
-				<div class="pure-menu"></div>
-				<ul class="container-flex list-unstyled">
-					<li><a href="/" class="text-uppercase c-gris-2 active">Home</a></li>
-					<li><a href="about.html" class="text-uppercase c-gris-2">About</a></li>
-					<li><a href="archive.html" class="text-uppercase c-gris-2">Archive</a></li>
-					<li><a href="contact.html" class="text-uppercase c-gris-2">Contact</a></li>
-				</ul>
-			</nav>
+
+			@include('partials/nav');
+		
 		</div>
 	</header>
 
@@ -46,10 +40,10 @@
 				<figure class="logo"><img src="/img/logotipo.png" alt=""></figure>
 				<nav>
 					<ul class="container-flex space-center list-unstyled">
-						<li><a href="index.html" class="text-uppercase c-white">home</a></li>
-						<li><a href="about.html" class="text-uppercase c-white">about</a></li>
-						<li><a href="archive.html" class="text-uppercase c-white">archive</a></li>
-						<li><a href="contact.html" class="text-uppercase c-white">contact</a></li>
+						<li><a href="{{route('pages.home')}}" class="text-uppercase c-white">Inicio</a></li>
+						<li><a href="{{route('pages.about')}}" class="text-uppercase c-white">Nosotros</a></li>
+						<li><a href="{{route('pages.archive')}}" class="text-uppercase c-white">Archivo</a></li>
+						<li><a href="{{route('pages.contact')}}" class="text-uppercase c-white">Contacto</a></li>
 					</ul>
 				</nav>
 				<div class="divider-2"></div>
