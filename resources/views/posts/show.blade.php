@@ -13,7 +13,7 @@
       
       @elseif($post->photos->count() > 1)
 
-        @include('posts.carousel');
+        @include('posts.carousel')
         
       @elseif ($post->iframe)
 				<div class="video">

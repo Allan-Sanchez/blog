@@ -25,7 +25,7 @@
 		<div class="container container-flex space-between">
 			<figure class="logo"><img src="/img/logotipo.png" alt=""></figure>
 
-			@include('partials/nav');
+			@include('partials/nav')
 		
 		</div>
 	</header>
