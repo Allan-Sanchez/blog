@@ -10,8 +10,11 @@ class PostsController extends Controller
     //
     public function show(Post $post)
     {
-        # code...
         // $post = Post::findOrfail($id);
-        return View('posts.show',compact('post'));
+
+        if ($post->isPublished() || auth()->check()){
+            return View('posts.show',compact('post'));
+        }
+        abort(404);
     }
 }
