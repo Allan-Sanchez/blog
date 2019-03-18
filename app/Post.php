@@ -147,4 +147,25 @@ class Post extends Model
         return $this->tags()->sync($tagIds);
     }
 
+    // vistas polimorficas
+
+    public function viewType($value = '')
+    {
+        if ($this->photos->count() === 1) {
+            
+            return 'posts.photo';
+
+        }elseif ($this->photos->count() > 1) {
+
+            return $value === 'home' ? 'posts.gallery':'posts.carousel';
+        
+        }elseif ($this->iframe) {
+            
+            return 'posts.iframe';
+        }else{
+
+            return 'posts.text';
+        }
+    }
+
 }
