@@ -42,8 +42,11 @@ class PostController extends Controller
             'title'=> 'required | min:3',
         ]);
 
-        $post = Post::create(['title' => $request->get('title')]);
-        
+        // $post = Post::create(['title' => $request->get('title')]);
+        $post = Post::create([
+            'title' => $request->get('title'),
+            'user_id' => auth()->id() 
+            ]);
 
         return redirect()->route('admin.posts.edit',compact('post'));
     }

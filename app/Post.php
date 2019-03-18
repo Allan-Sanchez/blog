@@ -8,7 +8,7 @@ use Carbon\Carbon;
 class Post extends Model
 {
     //
-    protected $fillable = ['title','iframe','body','excerpt','published_at', 'category_id'];
+    protected $fillable = ['title','iframe','body','excerpt','published_at', 'category_id','user_id'];
     // protected $guarded = [];
 
     protected $dates = ['published_at'];//para usar lo metodos de carbon
@@ -52,6 +52,12 @@ class Post extends Model
     {
         return $this->hasMany(Photo::class);
     }
+    public function owner()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
+
+    // fin de las relaciones
 
     public function scopePublished($query)
     {
