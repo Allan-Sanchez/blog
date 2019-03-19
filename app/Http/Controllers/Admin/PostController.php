@@ -15,8 +15,9 @@ class PostController extends Controller
 
     public function index()
     {
-        $posts = Post::all();
-        
+        // $posts = Post::all();
+        // $posts = Post::where('user_id',auth()->id())->get();
+        $posts = auth()->user()->posts;
         # code...
         return View('admin.posts.index',compact('posts'));
     }
@@ -38,6 +39,7 @@ class PostController extends Controller
     public function store(Request $request)
     {
         # code...
+        $this->authorize('create', new Post);
         $this->validate($request,[
             'title'=> 'required | min:3',
         ]);
@@ -53,7 +55,8 @@ class PostController extends Controller
 
     public function edit(Post $post)
     {
-        # code...
+        $this->authorize('view',$post);
+
         $categories = Category::all();
         $tags = Tag::all();
 
@@ -62,8 +65,7 @@ class PostController extends Controller
 
     public function update(Post $post ,StorePostRequest $request)
     {
-       
-        // return $request;
+        $this->authorize('update',$post);
         $post->update($request->all());
 
         $post->syncTags($request->get('tags'));
@@ -90,10 +92,7 @@ class PostController extends Controller
         /*
         **	@Revisar el model Post para ver todos la logica de eliminacion 
         */
-        
-        
-
-        
+        $this->authorize('delete',$post);
 
         $post->delete();
 

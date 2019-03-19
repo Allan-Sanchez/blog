@@ -62,7 +62,7 @@ class PostsTableSeeder extends Seeder
         $post->body = "<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Tenetur magnam ullam labore nostrum pariatur!</p>";
         $post->published_at = Carbon::now()->subDays(2);
         $post->category_id = 2;
-        $post->user_id =1;
+        $post->user_id =2;
         $post->save();
         $post->tags()->attach(Tag::create(['name' => 'etiqueta 3']));
 
@@ -75,7 +75,7 @@ class PostsTableSeeder extends Seeder
         $post->body = "<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Tenetur magnam ullam labore nostrum pariatur!</p>";
         $post->published_at = Carbon::now()->subDays(1);
         $post->category_id = 2;
-        $post->user_id =1;
+        $post->user_id =2;
         $post->save();
         $post->tags()->attach(Tag::create(['name' => 'etiqueta 4']));
 
