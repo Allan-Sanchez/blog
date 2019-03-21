@@ -17,7 +17,10 @@ class PostController extends Controller
     {
         // $posts = Post::all();
         // $posts = Post::where('user_id',auth()->id())->get();
-        $posts = auth()->user()->posts;
+
+        // $posts = auth()->user()->posts;//veriamos solo los posts que nos petenecen
+        // validar par que el administrador pueda ver todos los post
+        $posts = Post::allowed()->get();
         # code...
         return View('admin.posts.index',compact('posts'));
     }
@@ -55,7 +58,7 @@ class PostController extends Controller
 
     public function edit(Post $post)
     {
-        $this->authorize('view',$post);
+        $this->authorize('update',$post);
 
         $categories = Category::all();
         $tags = Tag::all();

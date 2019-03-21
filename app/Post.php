@@ -66,6 +66,17 @@ class Post extends Model
         ->where('published_at','<=',Carbon::now())
         ->latest('published_at');
     }
+    public function scopeAllowed($query)
+    {
+        if (auth()->user()->can('view',$this)) {//can(view) hace referencia asi puede ver el la policy
+            return $query;
+        }else{
+            return $query->where('user_id',auth()->id());
+        }
+    }
+
+
+    // fin de los scope
 
     public function isPublished()
     {

@@ -28,12 +28,18 @@ Route::get('tags/{tag}', 'TagsController@show')->name('tags.show');
 Route::group(['prefix' => 'admin', 'namespace'=> 'Admin', 'middleware'=> 'auth'],function(){
     //rutas de administracion
     Route::get('/', 'PostController@verific_admin')->name('dashboard');
-    Route::get('posts', 'PostController@index')->name('admin.posts.index');
-    Route::get('posts/create', 'PostController@create')->name('admin.posts.create');
-    Route::post('posts', 'PostController@store')->name('admin.posts.store');
-    Route::get('posts/{post}', 'PostController@edit')->name('admin.posts.edit');
-    Route::put('posts/{post}', 'PostController@update')->name('admin.posts.update');
-    Route::delete('posts/{post}', 'PostController@destroy')->name('admin.posts.destroy');
+
+    Route::resource('posts','PostController',['except'=>'show','as'=>'admin']);
+    Route::resource('users','UserController',['as'=>'admin']);    
+
+
+
+    // Route::get('posts', 'PostController@index')->name('admin.posts.index');
+    // Route::get('posts/create', 'PostController@create')->name('admin.posts.create');
+    // Route::post('posts', 'PostController@store')->name('admin.posts.store');
+    // Route::get('posts/{post}', 'PostController@edit')->name('admin.posts.edit');
+    // Route::put('posts/{post}', 'PostController@update')->name('admin.posts.update');
+    // Route::delete('posts/{post}', 'PostController@destroy')->name('admin.posts.destroy');
     // ruta para la carga de imganes
     Route::post('posts/{post}/photos', 'PhotosController@store')->name('admin.posts.photos.store');
     Route::delete('photos/{photo}','PhotosController@destroy')->name('admin.photos.destroy');
