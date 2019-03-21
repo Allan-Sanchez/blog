@@ -11,7 +11,15 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
+        /*
+        **	@desavilitar la revision de las llaves foreneas 
+        */
+        DB::statement('SET FOREIGN_KEY_CHECKS=0;');
+
         $this->call(UsersTableSeeder::class);
         $this->call(PostsTableSeeder::class);
+        // AVILITAMOS NUEVA MENTE LA REVISION DE LAS LLAVES FORANEAS
+        DB::statement('SET FOREIGN_KEY_CHECKS=1;');
+
     }
 }
