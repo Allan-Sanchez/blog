@@ -44,7 +44,7 @@
                 <td>{{ $user->getRoleNames()->implode(', ') }}</td>
                 <td>
                     <div class="">
-                    <a class="btn btn-sm btn-default" href="{{route('admin.users.show',$user)}}" target="_blank" role="button"><i class="fa fa-eye" aria-hidden="true"></i></i></a>
+                    <a class="btn btn-sm btn-default" href="{{route('admin.users.show',$user)}}"  role="button"><i class="fa fa-eye" aria-hidden="true"></i></i></a>
                         <a class="btn btn-sm btn-info" href="{{route('admin.users.edit',$user)}}" role="button"><i class="fa fa-pencil" aria-hidden="true"></i></a>
                         <form action="{{route('admin.users.destroy',$user)}}" method="POST" style="display:inline">
                           @csrf  @method('DELETE')
