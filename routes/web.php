@@ -33,6 +33,7 @@ Route::group(['prefix' => 'admin', 'namespace'=> 'Admin', 'middleware'=> 'auth']
     Route::resource('users','UserController',['as'=>'admin']);    
 
     Route::put('users/{user}/roles', 'UsersRoleController@update')->name('admin.users.roles.update');
+    Route::put('users/{user}/permissions', 'UsersPermissionController@update')->name('admin.users.permissions.update');
 
 
     // ruta para la carga de imganes
