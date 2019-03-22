@@ -1,5 +1,18 @@
 @extends('admin.plantilla')
 
+@section('header')
+     <h1>
+        Posts
+        <small>Crear publicación</small>
+      </h1>
+      <ol class="breadcrumb">
+        <li><a href="{{route('dashboard')}}"><i class="fa fa-dashboard"></i> Inicio</a></li>
+        <li><a href="{{route('admin.users.index')}}"><i class="fa fa-list"></i> Usuarios</a></li>
+        <li><a href="{{route('admin.users.show',$user)}}"><i class="fa fa-user"></i> Datos/Usuario</a></li>
+        <li class="active">Editar</li>
+      </ol>
+@endsection
+
 @section('contenido')
     <div class="row">
         <div class="col-md-6">
@@ -48,5 +61,47 @@
                 </div>
             </div>
         </div>
+        <div class="col-md-6">
+            <div class="box box-primary">
+                <div class="box-header with-border">
+                    <h3 class="box-title">
+                        Roles
+                    </h3>
+                </div>
+                <div class="box-body">
+                    <form action="{{route('admin.users.roles.update',$user)}}" method="post">
+                        @method('put') @csrf
+                       @foreach ($roles as $id=>$name)
+                            <div class="">
+                                <label>
+                                    <input name="NewRoles[]" class="flat-red" type="checkbox" value="{{$name}}"
+                                    {{$user->roles->contains($id)?'checked':''}}>
+                                        {{$name}}
+                                </label>
+                            </div>
+                       @endforeach
+                       <button type="submit" class="btn btn-primary btn-block">Actualizar roles</button>
+                    </form>
+                            
+                </div>
+            </div>
+        </div>
     </div>    
 @endsection
+
+@push('styles')
+<link rel="stylesheet" href="/adminlte/plugins/iCheck/all.css">
+    
+@endpush
+
+@push('scripts')
+
+<script src="/adminlte/plugins/iCheck/icheck.min.js"></script>
+<script>
+     //Flat red color scheme for iCheck
+     $('input[type="checkbox"].flat-red, input[type="radio"].flat-red').iCheck({
+      checkboxClass: 'icheckbox_flat-blue',
+      radioClass   : 'iradio_flat-blue'
+    })
+</script>
+@endpush

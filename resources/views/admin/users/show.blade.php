@@ -1,5 +1,17 @@
 @extends('admin.plantilla')
 
+@section('header')
+     <h1>
+        Posts
+        <small>Crear publicación</small>
+      </h1>
+      <ol class="breadcrumb">
+        <li><a href="{{route('dashboard')}}"><i class="fa fa-dashboard"></i> Inicio</a></li>
+        <li><a href="{{route('admin.users.index')}}"><i class="fa fa-list"></i> Usuarios</a></li>
+        <li class="active">Editar</li>
+      </ol>
+@endsection
+
 @section('contenido')
 <div class="row">
     <div class="col-md-3">
