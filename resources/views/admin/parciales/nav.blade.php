@@ -2,7 +2,8 @@
     <li class="header">Navegación</li>
     <!-- Optionally, you can add icons to the links -->
     {{-- is nos sirve para preguntar en que url estamos --}}
-    <li {{ request()->is('admin') ? 'class=active' : ''}}><a href="{{route('dashboard')}}"><i class="fa fa-home"></i>
+    <li {{ request()->is('admin') ? 'class=active' : ''}}>
+        <a href="{{route('dashboard')}}"><i class="fa fa-home"></i>
             <span>Inicio</span></a></li>
 
     <li class="treeview {{ request()->is('admin/posts*') ? 'active' : ''}}">
@@ -25,5 +26,22 @@
                   @endif
               </li>
           </ul>
-      </li>
+    </li>
+    <li class="treeview {{ request()->is('admin/users*') ? 'active' : ''}}">
+            <a href="#"><i class="fa fa-users"></i> <span>Usuarios</span>
+                <span class="pull-right-container">
+                    <i class="fa fa-angle-left pull-right"></i>
+                </span>
+            </a>
+            <ul class="treeview-menu">
+                  <li {{ request()->is('admin/users') ? 'class=active' : ''}}>
+                      <a href="{{route('admin.users.index')}}"> <i class="fa fa-eye" aria-hidden="true">
+                  </i> ver todos los usuarios</a></li>
+
+                  <li {{ request()->is('admin/users/create') ? 'class=active' : ''}}>
+                       <a href="{{route('admin.users.create')}}"> <i class="fa fa-pencil" aria-hidden="true">
+                  </i> Crear usuarios</a></li>
+                  
+              </ul>
+        </li>
 </ul>

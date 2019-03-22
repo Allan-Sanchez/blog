@@ -71,12 +71,14 @@
                 <div class="box-body">
                     <form action="{{route('admin.users.roles.update',$user)}}" method="post">
                         @method('put') @csrf
-                       @foreach ($roles as $id=>$name)
+                       @foreach ($roles as $role)
                             <div class="">
                                 <label>
-                                    <input name="NewRoles[]" class="flat-red" type="checkbox" value="{{$name}}"
-                                    {{$user->roles->contains($id)?'checked':''}}>
-                                        {{$name}}
+                                    <input name="NewRoles[]" class="flat-red" type="checkbox" value="{{$role->name}}"
+                                    {{$user->roles->contains($role->id)?'checked':''}}>
+                                        {{$role->name}}
+                                        <br>
+                                    <small class="text-muted">{{$role->permissions->pluck('name')->implode(', ')}}</small>
                                 </label>
                             </div>
                        @endforeach
