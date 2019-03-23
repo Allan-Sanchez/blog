@@ -14,9 +14,13 @@ class EventServiceProvider extends ServiceProvider
      *
      * @var array
      */
+    // creamos el vento y el  listen antes de ejecutar even lister
     protected $listen = [
         Registered::class => [
             SendEmailVerificationNotification::class,
+        ],
+        'App\Events\UserWasCreated' => [
+            'App\Listeners\SendLoginCredentials',
         ],
     ];
 

@@ -1,5 +1,6 @@
 <?php
 
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -10,6 +11,10 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+// ruta para diseñar la vista de los mensajes
+//  Route::get('email', function () {
+//     return  new App\Mail\LoginCredentials(App\User::first(),'asd554');
+//  });
 
 Route::get('/','PagesController@home')->name('pages.home');
 Route::get('nosotros', 'PagesController@about')->name('pages.about');
