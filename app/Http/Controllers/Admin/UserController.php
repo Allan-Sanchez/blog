@@ -28,8 +28,11 @@ class UserController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create()
-    {
-        return view('admin.users.create');
+    {   
+        $user =  new User;
+        $roles = Role::with('permissions')->get();
+        $permissions = Permission::pluck('name','id');
+        return view('admin.users.create', compact('user','roles','permissions'));
     }
 
     /**
@@ -40,7 +43,28 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        //validar el formulario
+       $data = $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+        ]);
+        //generar una contrase;a
+        $data['password'] = str_random(8);
+        // $data['password'] = 'ejemplo';
+        //creamos  al usuario
+        $user = User::create($data);
+        //asingnamos los roles
+        if ($request->filled('NewRoles')) {
+            $user->assignRole($request->NewRoles);
+        }
+        //asingnamos lo permisos
+        if ($request->filled('permissions')) {
+            $user->givePermissionTo($request->permissions);
+        }
+        //enviarmos el email con los datos
+
+        //regresamos un mensaje a usuario
+        return redirect()->route('admin.users.index')->withFlash('El usuario ha sido creado correctamente');
     }
 
     /**

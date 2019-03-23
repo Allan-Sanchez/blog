@@ -71,17 +71,7 @@
                 <div class="box-body">
                     <form action="{{route('admin.users.roles.update',$user)}}" method="post">
                         @method('put') @csrf
-                       @foreach ($roles as $role)
-                            <div class="">
-                                <label>
-                                    <input name="NewRoles[]" class="flat-red" type="checkbox" value="{{$role->name}}"
-                                    {{$user->roles->contains($role->id)?'checked':''}}>
-                                        {{$role->name}}
-                                        <br>
-                                    <small class="text-muted">{{$role->permissions->pluck('name')->implode(', ')}}</small>
-                                </label>
-                            </div>
-                       @endforeach
+                       @include('admin.roles.checkboxes')
                        <button type="submit" class="btn btn-primary btn-block">Actualizar roles</button>
                     </form>
                             
@@ -96,20 +86,12 @@
                     <div class="box-body">
                         <form action="{{route('admin.users.permissions.update',$user)}}" method="post">
                             @method('put') @csrf
-                           @foreach ($permissions as $id=>$name)
-                                <div class="">
-                                    <label>
-                                        <input name="permissions[]" class="flat-red" type="checkbox" value="{{$name}}"
-                                        {{$user->permissions->contains($id)?'checked':''}}>
-                                            {{$name}}
-                                    </label>
-                                </div>
-                           @endforeach
+                           @include('admin.permissions.checkboxes')
                            <button type="submit" class="btn btn-primary btn-block">Actualizar Permisos</button>
                         </form>
                                 
                     </div>
-                </div>
+            </div>
         </div>
     </div>    
 @endsection

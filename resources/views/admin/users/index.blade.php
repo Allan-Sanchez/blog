@@ -17,10 +17,10 @@
     <div class="box-header">
       <h3 class="box-title">Lista de Usuarios</h3>
       <!-- Button trigger modal -->
-      <button type="button" class="btn btn-primary pull-right" data-toggle="modal" data-target="#create-user">
+      <a href="{{route('admin.users.create')}}" class="btn btn-primary pull-right" >
         <i class="fa fa-plus" aria-hidden="true"></i>
         Crear Usuario
-      </button>
+      </a>
     </div>  
     <!-- /.box-header -->
     <div class="box-body">

@@ -41,7 +41,7 @@ class User extends Authenticatable
     //mutador
     public function setPasswordAttribute($password)
     {
-        $this->attribute['password'] = bcrypt($password);
+        $this->attributes['password'] = bcrypt($password);
     }
 
     public function posts()
