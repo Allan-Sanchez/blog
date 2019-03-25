@@ -44,6 +44,21 @@ class User extends Authenticatable
         $this->attributes['password'] = bcrypt($password);
     }
 
+    /*
+    **	@Scope 
+    */
+    public function scopeAllowed($query)
+    {
+        if (auth()->user()->can('view',$this)) {//can(view) hace referencia asi puede ver el la policy
+            return $query;
+        }else{
+            return $query->where('id',auth()->id());
+        }
+    }
+
+    /*
+    **	@Relaciones 
+    */
     public function posts()
     {
         return $this->hasMany(Post::class);
