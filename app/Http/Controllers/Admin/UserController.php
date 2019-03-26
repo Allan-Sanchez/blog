@@ -112,7 +112,7 @@ class UserController extends Controller
 
         $user->update($request->validated());
 
-        return back()->withFlash('Usuario Actualizado');
+        return redirect()->route('admin.users.edit', $user)->withFlash('Usuario Actualizado');
     }
 
     /**
@@ -121,8 +121,11 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(User $user)
     {
-        //
+        $this->authorize('delete',$user);
+        $user->delete();
+        return redirect()->route('admin.users.index', $user)->withFlash('Usuario eliminado correctamente');
+
     }
 }
