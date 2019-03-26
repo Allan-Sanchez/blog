@@ -36,6 +36,7 @@ Route::group(['prefix' => 'admin', 'namespace'=> 'Admin', 'middleware'=> 'auth']
 
     Route::resource('posts','PostController',['except'=>'show','as'=>'admin']);
     Route::resource('users','UserController',['as'=>'admin']);    
+    Route::resource('roles','RoleController',['as'=>'admin']);    
 
     Route::middleware('role:Admin')->put('users/{user}/roles', 'UsersRoleController@update')->name('admin.users.roles.update');
     Route::middleware('role:Admin')->put('users/{user}/permissions', 'UsersPermissionController@update')->name('admin.users.permissions.update');

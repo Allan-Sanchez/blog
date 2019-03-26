@@ -22,15 +22,7 @@
                 </div>
 
                 <div class="box-body">
-                    @if ($errors->any())
-                        <ul class="list-group">
-                            @foreach ($errors->all() as $error)
-                                <li class="list-group-item list-group-item-danger">
-                                    {{$error}}
-                                </li>
-                            @endforeach 
-                        </ul>
-                    @endif
+                    @include('admin.parciales.errors-messages')
 
                     <form action="{{route('admin.users.update',$user)}}" method="POST">
                     @method('PUT') @csrf
@@ -96,7 +88,7 @@
                         @role('Admin')
                         <form action="{{route('admin.users.permissions.update',$user)}}" method="post">
                             @method('put') @csrf
-                           @include('admin.permissions.checkboxes')
+                           @include('admin.permissions.checkboxes',['model'=>$user])
                            <button type="submit" class="btn btn-primary btn-block">Actualizar Permisos</button>
                         </form>
                         @else

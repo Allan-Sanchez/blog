@@ -3,11 +3,11 @@
 @section('header')
      <h1>
         Crear
-        <small>Usuarios</small>
+        <small>Roles</small>
       </h1>
       <ol class="breadcrumb">
         <li><a href="{{route('dashboard')}}"><i class="fa fa-dashboard"></i> Inicio</a></li>
-        <li><a href="{{route('admin.users.index')}}"><i class="fa fa-list"></i> Usuarios</a></li>
+        <li><a href="{{route('admin.roles.index')}}"><i class="fa fa-list"></i> Roles</a></li>
         <li class="active">Crear</li>
       </ol>
 @endsection
@@ -22,33 +22,32 @@
 
               <div class="box-body">
                   @include('admin.parciales.errors-messages')
-                  <form action="{{route('admin.users.store')}}" method="POST">
+
+                  <form action="{{route('admin.roles.store')}}" method="POST">
                    @csrf
                       <div class="form-group">
-                          <label for="name">Nombre</label>
-                          <input class="form-control" type="text" name="name" id="nameUser" value="{{old('name')}}">
+                          <label for="name">Nombre Role:</label>
+                          <input class="form-control" type="text" name="name" id="nameRole" value="{{old('name')}}">
                       </div>
 
                       <div class="form-group">
-                              <label for="email">Correo Electronico</label>
-                              <input class="form-control" type="email" name="email" id="emailUser" value="{{old('email')}}">
+                              <label for="email">Guard:</label>
+                              <select name="guard_name" class="form-control">
+                                  @foreach (config('auth.guards') as $guardName => $guard)
+                                      
+                                  <option {{old('guard_name')===$guardName ?'selected':''}} value="{{$guardName}}">{{$guardName}}</option>
+                                  @endforeach
+                              </select>
                       </div>
                       
-                      <div class="form-group col-md-6">
-                        <label>Roles</label>
-                        @include('admin.roles.checkboxes')
-                      </div>
                       
                       <div class="form-group col-md-6">
                         <label >Permisos</label>
-                        @include('admin.permissions.checkboxes',['model'=>$user])
-                      </div>
-
-                      <span class="help-block">La contraseña sera enviada al nuevo usuario via email</span>
-
+                        @include('admin.permissions.checkboxes',['model'=>$role])
+                      </div> 
 
                       <button type="submit" class="btn btn-primary btn-block">
-                         <span class="glyphicon glyphicon-cog"></span>  Crear Usuario</button>
+                         <span class="glyphicon glyphicon-cog"></span>  Crear Role</button>
                   </form>
               </div>
           </div>
