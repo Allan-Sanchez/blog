@@ -2,7 +2,7 @@
 
 @section('header')
      <h1>
-        Crear
+        Editar
         <small>Roles</small>
       </h1>
       <ol class="breadcrumb">
@@ -23,7 +23,8 @@
               <div class="box-body">
                   @include('admin.parciales.errors-messages')
 
-                  <form action="{{route('admin.roles.store')}}" method="POST">
+                  <form action="{{route('admin.roles.update',$role)}}" method="POST">
+                    @method('put')
                       @include('admin.roles.form')
                       <button type="submit" class="btn btn-primary btn-block">
                          <span class="glyphicon glyphicon-cog"></span>  Crear Role</button>

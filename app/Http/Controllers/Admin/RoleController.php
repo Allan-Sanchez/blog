@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\SaveRoleRequest;
 use Spatie\Permission\Models\Permission;
 
 class RoleController extends Controller
@@ -37,15 +38,9 @@ class RoleController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(SaveRoleRequest $request)
     {
-        $data = $request->validate([
-            'name'=> 'required',
-            'guard_name'=>'required',
-            
-        ]);
-
-        $role = Role::create($data);
+        $role = Role::create($request->validated());
 
         if ($request->has('permissions')) {
             # code...
@@ -72,9 +67,10 @@ class RoleController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Role $role)
     {
-        //
+        $permissions = Permission::pluck('name','id');
+        return view('admin.roles.edit',compact('role','permissions'));
     }
 
     /**
@@ -84,9 +80,18 @@ class RoleController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(SaveRoleRequest $request,Role $role)
     {
-        //
+        $role->update($request->validated());
+        
+        $role->permissions()->detach();
+
+
+        if ($request->has('permissions')) {
+            # code...
+            $role->givePermissionTo($request->permissions);
+        }
+        return redirect()->route('admin.roles.edit',$role)->withFlash('El rol fue editado correctamente');
     }
 
     /**
@@ -95,8 +100,13 @@ class RoleController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Role $role)
     {
-        //
+        if($role->id === 1){
+            throw new \Illuminate\Auth\Access\AuthorizationException('No se puede eliminar este role');
+        }
+        $role->delete();
+
+        return redirect()->route('admin.roles.index')->withFlash('Role eliminado correctamente');
     }
 }
