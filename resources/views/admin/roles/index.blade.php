@@ -17,10 +17,12 @@
     <div class="box-header">
       <h3 class="box-title">Lista de Roles</h3>
       <!-- Button trigger modal -->
-      <a href="{{route('admin.roles.create')}}" class="btn btn-primary pull-right" >
-        <i class="fa fa-plus" aria-hidden="true"></i>
-        Crear Role
-      </a>
+      @can('create',$roles->first())
+        <a href="{{route('admin.roles.create')}}" class="btn btn-primary pull-right" >
+          <i class="fa fa-plus" aria-hidden="true"></i>
+          Crear Role
+        </a>
+      @endcan
     </div>  
     <!-- /.box-header -->
     <div class="box-body">
@@ -44,13 +46,20 @@
                 <td>{{ $role->permissions->pluck('display_name')->implode(', ') }}</td>
                 <td>
                     <div class="">
-                    <a class="btn btn-sm btn-default" href="{{route('admin.roles.show',$role)}}"  role="button"><i class="fa fa-eye" aria-hidden="true"></i></i></a>
+                      @can('update', $role)
                         <a class="btn btn-sm btn-info" href="{{route('admin.roles.edit',$role)}}" role="button"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+                      @endcan
+
+                      @can('delete', $role)
+                        @if ($role->id !== 1)
                         <form action="{{route('admin.roles.destroy',$role)}}" method="POST" style="display:inline">
                           @csrf  @method('DELETE')
                           <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Estas seguro de querer eliminar este role.')">
                             <i class="fa fa-times" aria-hidden="true"></i></button>
                         </form>
+                        @endif
+                        
+                      @endcan
                     </div>
                  </td>
              </tr>

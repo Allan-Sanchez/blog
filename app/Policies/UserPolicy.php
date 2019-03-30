@@ -63,27 +63,4 @@ class UserPolicy
         return $authUser->id === $user->id ||$user->hasPermissionTo('delete users');
     }
 
-    /**
-     * Determine whether the user can restore the model.
-     *
-     * @param  \App\User  $user
-     * @param  \App\User  $model
-     * @return mixed
-     */
-    public function restore(User $user, User $model)
-    {
-        //
-    }
-
-    /**
-     * Determine whether the user can permanently delete the model.
-     *
-     * @param  \App\User  $user
-     * @param  \App\User  $model
-     * @return mixed
-     */
-    public function forceDelete(User $user, User $model)
-    {
-        //
-    }
 }

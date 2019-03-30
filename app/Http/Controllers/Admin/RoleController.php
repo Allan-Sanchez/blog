@@ -16,7 +16,9 @@ class RoleController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {   $roles = Role::all();
+    {
+        $this->authorize('view',new Role);
+        $roles = Role::all();
         return view('admin.roles.index',compact('roles'));
 
     }
@@ -27,6 +29,7 @@ class RoleController extends Controller
      */
     public function create()
     {
+        $this->authorize('create',new Role);
         $role = new Role;
         $permissions = Permission::pluck('name','id');
         return view('admin.roles.create',compact('role','permissions'));
@@ -40,6 +43,7 @@ class RoleController extends Controller
      */
     public function store(SaveRoleRequest $request)
     {
+        $this->authorize('create',new Role);
         $role = Role::create($request->validated());
 
         if ($request->has('permissions')) {
@@ -50,17 +54,7 @@ class RoleController extends Controller
 
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
+   
     /**
      * Show the form for editing the specified resource.
      *
@@ -69,6 +63,7 @@ class RoleController extends Controller
      */
     public function edit(Role $role)
     {
+        $this->authorize('update',$role);
         $permissions = Permission::pluck('name','id');
         return view('admin.roles.edit',compact('role','permissions'));
     }
@@ -82,6 +77,7 @@ class RoleController extends Controller
      */
     public function update(SaveRoleRequest $request,Role $role)
     {
+        $this->authorize('update',$role);
         $role->update($request->validated());
         
         $role->permissions()->detach();
@@ -102,9 +98,8 @@ class RoleController extends Controller
      */
     public function destroy(Role $role)
     {
-        if($role->id === 1){
-            throw new \Illuminate\Auth\Access\AuthorizationException('No se puede eliminar este role');
-        }
+        $this->authorize('delete',$role);
+      
         $role->delete();
 
         return redirect()->route('admin.roles.index')->withFlash('Role eliminado correctamente');

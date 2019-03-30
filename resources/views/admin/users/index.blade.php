@@ -17,10 +17,12 @@
     <div class="box-header">
       <h3 class="box-title">Lista de Usuarios</h3>
       <!-- Button trigger modal -->
-      <a href="{{route('admin.users.create')}}" class="btn btn-primary pull-right" >
-        <i class="fa fa-plus" aria-hidden="true"></i>
-        Crear Usuario
-      </a>
+      @can('create', $users->first())
+        <a href="{{route('admin.users.create')}}" class="btn btn-primary pull-right" >
+          <i class="fa fa-plus" aria-hidden="true"></i>
+          Crear Usuario
+        </a>
+      @endcan
     </div>  
     <!-- /.box-header -->
     <div class="box-body">
@@ -44,13 +46,21 @@
                 <td>{{ $user->getRoleNames()->implode(', ') }}</td>
                 <td>
                     <div class="">
-                    <a class="btn btn-sm btn-default" href="{{route('admin.users.show',$user)}}"  role="button"><i class="fa fa-eye" aria-hidden="true"></i></i></a>
+                      @can('view', $user)
+                        <a class="btn btn-sm btn-default" href="{{route('admin.users.show',$user)}}"  role="button"><i class="fa fa-eye" aria-hidden="true"></i></i></a>
+                      @endcan
+
+                      @can('update', $user)
                         <a class="btn btn-sm btn-info" href="{{route('admin.users.edit',$user)}}" role="button"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+                      @endcan
+
+                      @can('delete', $user)
                         <form action="{{route('admin.users.destroy',$user)}}" method="POST" style="display:inline">
                           @csrf  @method('DELETE')
                           <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Estas seguro de querer eliminar esta usuario.')">
                             <i class="fa fa-times" aria-hidden="true"></i></button>
-                        </form>
+                        </form>                        
+                      @endcan
                     </div>
                  </td>
              </tr>
