@@ -3,41 +3,48 @@
 @section('contenido')
 <section class="pages container">
 		<div class="page page-archive">
-			<h1 class="text-capitalize">archive</h1>
+			<h1 class="text-capitalize">Archivos</h1>
 			<p>Nam efficitur, massa quis fringilla volutpat, ipsum massa consequat nisi, sed eleifend orci sem sodales lorem. Curabitur molestie eros urna, eleifend molestie risus placerat sed.</p>
 			<div class="divider-2" style="margin: 35px 0;"></div>
 			<div class="container-flex space-between">
 				<div class="authors-categories">
 					<h3 class="text-capitalize">authors</h3>
 					<ul class="list-unstyled">
-						<li>Ryan Killen</li>
-						<li>Lisa Stewart</li>
-						<li>James Lambert</li>
-						<li>Mark Singer</li>
+						@forelse ($authors as $author)
+							<li> {{$author->name}}</li>
+						@empty
+							<li>Sin usuarios en la Base de datos</li>
+						@endforelse
 					</ul>
 					<h3 class="text-capitalize">categories</h3>
 					<ul class="list-unstyled">
-						<li class="text-capitalize">i do travel</li>
-						<li class="text-capitalize">i do observe</li>
-						<li class="text-capitalize">i do photos</li>
-						<li class="text-capitalize">i do watch</li>
-						<li class="text-capitalize">i do listen</li>
-						<li class="text-capitalize">i do quote</li>
-						<li class="text-capitalize">i do explore</li>
+						@forelse ($categories as $category)
+						<a style="text-decoration: none; color: #000;" href="{{route('categorias.show',$category)}}">
+							<li class="text-capitalize">{{$category->name}}</li>
+						</a>
+						@empty
+						<li>Sin categorias...</li>
+						@endforelse
 					</ul>
 				</div>
 				<div class="latest-posts">
-					<h3 class="text-capitalize">latest posts</h3>
-					<p>No Difference How Many Peaks You Reach If There Was No Pleasure In The Climb.</p>
-					<p>You Know, I'd Rather Argue With You, Then Laugh With Anyone Else. </p>
-					<p>Everything In The Universe Has A Rhythm, Everything Dances.</p>
-					<p>As human beings, we have a natural compulsion to fill empty spaces.</p>
-					<p>Nature and Books belong to the eyes that see them.</p>
-					<h3 class="text-capitalize">posts by month</h3>
+					<h3 class="text-capitalize">Ultimas Publicaciones</h3>
+						@forelse ($posts as $post)
+						<a style="text-decoration: none; color: #000;" href="{{route('posts.show',$post)}}">
+							<p>{{$post->title}}</p>
+						</a>
+							
+						@empty
+							<p>No hay Publicaciones por mostrar</p>
+						@endforelse
+
+					<h3 class="text-capitalize">Publicaciones por Mes</h3>
 					<ul class="list-unstyled">
-						<li>August 2015</li>
-						<li>September 2015</li>
-						<li>October 2015</li>
+						@forelse ($archivo as $data)
+						<li>{{$data->month}} {{$data->year}} ({{$data->posts}})</li>
+						@empty
+							<p>Sin fecha...</p>
+						@endforelse
 					</ul>
 				</div>
 			</div>
