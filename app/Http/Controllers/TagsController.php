@@ -12,7 +12,7 @@ class TagsController extends Controller
     {
         return view('pages.home',[
             'title' => "Publicaciones de la etiqueta  $tag->name ",
-            'posts'=>$tag->posts()->paginate(5),
+            'posts'=>$tag->posts()->published()->paginate(5),
 
         ]);
         

@@ -12,7 +12,7 @@ class categoriasController extends Controller
     {   
         return view('pages.home',[
             'title' => "Publicaciones de la categoria  $category->name ",
-            'posts'=>$category->posts()->paginate(5),
+            'posts'=>$category->posts()->published()->paginate(5),
 
         ]);
     }

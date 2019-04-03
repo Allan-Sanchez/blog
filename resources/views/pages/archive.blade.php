@@ -41,7 +41,9 @@
 					<h3 class="text-capitalize">Publicaciones por Mes</h3>
 					<ul class="list-unstyled">
 						@forelse ($archivo as $data)
-						<li>{{$data->month}} {{$data->year}} ({{$data->posts}})</li>
+						<a style="text-decoration: none; color: #000;" href="{{route('pages.home',['month'=>$data->month, 'year' => $data->year])}}">
+							<li class="text-capitalize">{{$data->monthname}} {{$data->year}} ({{$data->posts}})</li>
+						</a>
 						@empty
 							<p>Sin fecha...</p>
 						@endforelse

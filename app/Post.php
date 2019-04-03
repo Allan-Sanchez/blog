@@ -11,6 +11,9 @@ class Post extends Model
     protected $fillable = ['title','iframe','body','excerpt','published_at', 'category_id','user_id'];
     // protected $guarded = [];
 
+    // pero no es muy recomendable
+    // protected $with = ['category','tags','owner','photos'];
+
     protected $dates = ['published_at'];//para usar lo metodos de carbon
 
     protected static function boot()
@@ -62,9 +65,10 @@ class Post extends Model
     public function scopePublished($query)
     {
         
-        $query->whereNotNull('published_at')
-        ->where('published_at','<=',Carbon::now())
-        ->latest('published_at');
+        $query->with(['category','tags','owner','photos'])
+              ->whereNotNull('published_at')
+              ->where('published_at','<=',Carbon::now())
+              ->latest('published_at');
     }
     public function scopeAllowed($query)
     {
@@ -73,6 +77,15 @@ class Post extends Model
         }else{
             return $query->where('user_id',auth()->id());
         }
+    }
+    public function scopeByYearAndMonth($query)
+    {
+        return $query = $this->selectRaw('year(published_at) as year')
+                             ->selectRaw('month(published_at) as month')
+                             ->selectRaw('monthname(published_at) as monthname')
+                             ->selectRaw('count(*) as posts')
+                             ->groupBy('year','month','monthname');
+        // ->orderBY('published_at','ASC')
     }
 
 
